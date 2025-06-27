@@ -74,7 +74,6 @@ const BottomNav = () => {
                 <div>
                     <label className="block mb-2 mt-3 text-sm font-medium text-[#ababab]">Guest</label>
                     <div className="flex items-center justify-between bg-[#1f1f1f] px-4 py-3 rounded-lg">
-                        <button onClick={decrement} className="text-yellow-500 text-2xl">&minus;</button>
                         <span className="text-white">{guestCount} Person</span>
                         <button onClick={increment} className="text-yellow-500 text-2xl">&#43;</button>
                     </div>
