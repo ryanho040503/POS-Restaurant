@@ -71,6 +71,8 @@
 import React, { useState } from 'react';
 import { menus } from '../../constants';
 import { GrRadialSelected } from 'react-icons/gr';
+import { FaShoppingCart } from "react-icons/fa";
+
 
 const MenuContainer = () => {
   const [selected, setSelected] = useState(menus[0]);
@@ -135,7 +137,7 @@ const MenuContainer = () => {
 
       {/* Danh sách món */}
       <div
-        className="grid gap-4 px-4 md:px-10 py-4 w-full"
+        className="grid gap-4 px-4 md:px-10 py-4 w-full cursor-pointer"
         style={{
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           display: 'grid',
@@ -146,7 +148,11 @@ const MenuContainer = () => {
             key={menu.id}
             className="flex flex-col items-start justify-between p-4 rounded-lg bg-[#1a1a1a] hover:bg-[#2a2a2a] duration-100"
           >
-            <h1 className="text-[#f5f5f5] text-lg font-semibold">{menu.name}</h1>
+            <div className="flex items-start justify-between w-full">
+              <h1 className="text-[#f5f5f5] text-lg font-semibold">{menu.name}</h1>
+              <button className="bg-[#2e4a40] text-[#02ca3a] p-2 rounded-lg"><FaShoppingCart size={20} /></button>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full mt-2 gap-2 sm:gap-0">
               <p className="text-[#f5f5f5] text-sm font-semibold">${menu.price}</p>
               <div className="flex items-center justify-between bg-[#1f1f1f] px-3 py-2 rounded-lg gap-2 w-full max-w-[120px]">
