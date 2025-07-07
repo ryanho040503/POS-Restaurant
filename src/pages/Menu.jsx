@@ -5,9 +5,13 @@ import { MdRestaurantMenu } from "react-icons/md";
 import MenuContainer from '../components/menu/MenuContainer';
 import CustomerInfo from '../components/menu/CustomerInfo';
 import CartItem from '../components/menu/CartItem';
+import { useSelector } from 'react-redux';
 import Bill from '../components/menu/Bill';
 
 const Menu = () => {
+
+  const customerData = useSelector( state => state.customer); 
+
   return (
     <>
       <div className="h-screen flex flex-col overflow-hidden">
@@ -24,8 +28,8 @@ const Menu = () => {
                 <div className="flex items-center gap-3 cursor-pointer">
                   <MdRestaurantMenu className="text-[#f5f5f5] text-4xl" />
                   <div className="flex flex-col items-start">
-                    <h1 className="text-md text-[#f5f5f5] font-semibold">Customer Name</h1>
-                    <p className="text-xs text-[#ababab] font-medium">Table Number: 2</p>
+                    <h1 className="text-md text-[#f5f5f5] font-semibold">{customerData.customerName || "Customer Name"}</h1>
+                    <p className="text-xs text-[#ababab] font-medium">{customerData.tableNo || "N/A"}</p>
                   </div>
                 </div>
               </div>
