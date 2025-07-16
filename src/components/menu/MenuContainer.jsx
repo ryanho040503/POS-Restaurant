@@ -72,11 +72,14 @@ import React, { useState } from 'react';
 import { menus } from '../../constants';
 import { GrRadialSelected } from 'react-icons/gr';
 import { FaShoppingCart } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { addItems } from '../../redux/slices/cartSlice';
 
 
 const MenuContainer = () => {
   const [selected, setSelected] = useState(menus[0]);
   const [itemCounts, setItemCounts] = useState({});
+  const dispatch = useDispatch();
 
   const increment = (id) => {
     setItemCounts(prev => ({
@@ -101,6 +104,19 @@ const MenuContainer = () => {
     }
   };
 
+  const handleAddToCart = (item) => {
+
+    const itemCount = itemCounts[item.id] || 0;
+    if (itemCount === 0) return;
+
+
+    const {name, price} = item;
+    const newObj = { id: Date.now(), name, pricePerQuantity : price, quantity: itemCount, price: price * itemCount };
+    
+    dispatch(addItems(newObj));
+    setItemCounts((prev) => ({ ...prev, [item.id]: 0 }));
+  }
+
   return (
     <div className="overflow-y-auto h-full">
       {/* Danh sách menu */}
@@ -111,23 +127,23 @@ const MenuContainer = () => {
           display: 'grid',
         }}
       >
-        {menus.map(menu => (
+        {menus.map(item => (
           <div
-            key={menu.id}
+            key={item.id}
             className="flex flex-col items-start justify-between p-4 rounded-lg h-[100px] cursor-pointer"
-            style={{ backgroundColor: menu.bgColor }}
-            onClick={() => setSelected(menu)}
+            style={{ backgroundColor: item.bgColor }}
+            onClick={() => setSelected(item)}
           >
             <div className="flex items-center justify-between w-full">
               <h1 className="text-[#f5f5f5] text-lg font-semibold truncate">
-                {menu.icon} {menu.name}
+                {item.icon} {item.name}
               </h1>
-              {selected.id === menu.id && (
+              {selected.id === item.id && (
                 <GrRadialSelected className="text-white min-w-[20px]" size={20} />
               )}
             </div>
             <p className="text-[#ababab] text-sm font-semibold">
-              {menu.items.length} Items
+              {item.items.length} Items
             </p>
           </div>
         ))}
@@ -143,21 +159,21 @@ const MenuContainer = () => {
           display: 'grid',
         }}
       >
-        {selected?.items.map(menu => (
+        {selected?.items.map(item => (
           <div
-            key={menu.id}
+            key={item.id}
             className="flex flex-col items-start justify-between p-4 rounded-lg bg-[#1a1a1a] hover:bg-[#2a2a2a] duration-100"
           >
             <div className="flex items-start justify-between w-full">
-              <h1 className="text-[#f5f5f5] text-lg font-semibold">{menu.name}</h1>
-              <button className="bg-[#2e4a40] text-[#02ca3a] p-2 rounded-lg"><FaShoppingCart size={20} /></button>
+              <h1 className="text-[#f5f5f5] text-lg font-semibold">{item.name}</h1>
+              <button onClick={() => handleAddToCart(item)} className="bg-[#2e4a40] text-[#02ca3a] p-2 rounded-lg"><FaShoppingCart size={20} /></button>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full mt-2 gap-2 sm:gap-0">
-              <p className="text-[#f5f5f5] text-sm font-semibold">${menu.price}</p>
+              <p className="text-[#f5f5f5] text-sm font-semibold">${item.price}</p>
               <div className="flex items-center justify-between bg-[#1f1f1f] px-3 py-2 rounded-lg gap-2 w-full max-w-[120px]">
                 <button
-                  onClick={() => decrement(menu.id)}
+                  onClick={() => decrement(item.id)}
                   className="text-yellow-500 text-xl px-2"
                 >
                   &minus;
@@ -166,14 +182,14 @@ const MenuContainer = () => {
                 <input
                   type="text"
                   inputMode="numeric"
-                  value={itemCounts[menu.id] ?? 0}
-                  onChange={(e) => handleChange(menu.id, e.target.value)}
+                  value={itemCounts[item.id] ?? 0}
+                  onChange={(e) => handleChange(item.id, e.target.value)}
                   className="w-10 text-center text-white bg-transparent focus:outline-none"
                   style={{ border: 'none' }}
                 />
 
                 <button
-                  onClick={() => increment(menu.id)}
+                  onClick={() => increment(item.id)}
                   className="text-yellow-500 text-xl px-2"
                 >
                   &#43;
