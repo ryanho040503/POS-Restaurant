@@ -9,10 +9,16 @@ const app = express();
 const PORT = process.env.PORT;
 connectDB();
 
+// Middleware
+app.use(express.json()); // Parse JSON bodies
+
 // Root Endpoint
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to the POS system backend server!" });
 });
+
+// Other end points 
+app.use('/api/user', require('./routes/userRoute'));
 
 //Goblal Error Handler
 app.use(globalErrorHandler)
