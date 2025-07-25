@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Order = require('../models/orderModel');
+const createHttpError = require('http-errors');
 
 const orderSchema = new mongoose.Schema({
     customerDetails: {
@@ -18,9 +20,12 @@ const orderSchema = new mongoose.Schema({
         total: { type: Number, required: true },
         tax: { type: Number, required: true },
         totalWithTax: { type: Number, required: true }
-    }, items : [
-
-    ] 
+    }, items : [],
+    table: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Table',
+        required: true
+    } 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);
