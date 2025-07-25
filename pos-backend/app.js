@@ -5,12 +5,15 @@ const config = require('./config/config');
 const globalErrorHandler = require('./middleware/globalErrorHandler');
 const createHttpError = require('http-errors');
 const app = express();
+const cookieParser = require('cookie-parser');
+
 
 const PORT = process.env.PORT;
 connectDB();
 
 // Middleware
 app.use(express.json()); // Parse JSON bodies
+app.use(cookieParser()); // Parse cookies
 
 // Root Endpoint
 app.get("/", (req, res) => {
