@@ -4,8 +4,10 @@ const connectDB = require('./config/database');
 const config = require('./config/config');
 const globalErrorHandler = require('./middleware/globalErrorHandler');
 const createHttpError = require('http-errors');
+const cors = require('cors');
 const app = express();
 const cookieParser = require('cookie-parser');
+
 
 
 const PORT = process.env.PORT;
@@ -14,6 +16,11 @@ connectDB();
 // Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
+app.use(cors({
+    credentials: true,
+    // origin: ['https://localhost:5173']
+    origin: true
+}));
 
 // Root Endpoint
 app.get("/", (req, res) => {
