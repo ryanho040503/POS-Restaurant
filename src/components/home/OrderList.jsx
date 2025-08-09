@@ -8,7 +8,7 @@ const OrderList = () => {
         <button className="bg-[#f6b100] p-4 text-xl font-bold rounded-lg">AM</button>
         <div className="flex items-center justify-between w-[100%]">
             <div className="flex flex-col items-start gap-1">
-                <h1 className="text-{#f5f5f5} text-lg font-semibold tracking wide">Ryan Ho</h1>
+                <h1 className="text-[#f5f5f5] text-lg font-semibold tracking wide">Ryan Ho</h1>
                 <p className="text-[#ababab] text-sm">8 Items</p>
             </div>
 

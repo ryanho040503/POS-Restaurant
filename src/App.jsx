@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import useLoadData from './hooks/useLoadData';
 import FullScreenLoader from './components/shared/FullScreenLoader';
+import Dashboard from './pages/Dashboard';
 
 function Layout() {
 
@@ -40,6 +41,11 @@ function Layout() {
         <Route path="/menu" element={
           <ProtectedRoutes>
             <Menu />
+          </ProtectedRoutes>
+        } />
+        <Route path="/dashboard" element={
+          <ProtectedRoutes>
+            <Dashboard />
           </ProtectedRoutes>
         } />
         <Route path="*" element={<div>404 Not Found</div>} />
